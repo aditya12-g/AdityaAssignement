@@ -1,0 +1,5 @@
+app:
+  auth:
+    allow-public-admin-registration: ${ALLOW_PUBLIC_ADMIN_REGISTRATION:true}
+  otp:
+    include-in-response: ${OTP_INCLUDE_IN_RESPONSE:true}

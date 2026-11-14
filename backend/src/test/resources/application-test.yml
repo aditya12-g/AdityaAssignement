@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: ${TEST_DATABASE_URL:jdbc:h2:mem:taskapp-test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL}
+    username: ${TEST_DATABASE_USERNAME:sa}
+    password: ${TEST_DATABASE_PASSWORD:}
+    driver-class-name: ${TEST_DATABASE_DRIVER:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

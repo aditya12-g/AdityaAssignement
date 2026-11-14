@@ -1,0 +1,11 @@
+target/
+.idea/
+.vscode/
+*.iml
+.env
+.env.*
+!.env.example
+node_modules/
+*.log
+/Backend_Developer_Task_Machine_Test.pdf
+/IQ Test and Personality Test Instructions.docx

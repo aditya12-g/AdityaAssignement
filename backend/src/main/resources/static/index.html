@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Northstar | Account & Products</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Northstar home">
+        <span class="brand-mark">N</span>
+        <span>northstar<span class="brand-dot">.</span></span>
+      </a>
+      <span class="topbar-note">ACCOUNT &amp; PRODUCT PORTAL</span>
+    </header>
+
+    <section id="auth-view" class="auth-layout">
+      <div class="intro">
+        <p class="eyebrow">A clearer way to manage your workspace</p>
+        <h1>Everything in<br>its right place.</h1>
+        <p class="intro-copy">Sign in to your account to manage products and workspace settings.</p>
+        <div class="trust-note"><span class="status-dot"></span> Secure access with expiring sessions</div>
+      </div>
+
+      <div class="card auth-card">
+        <div class="tabs" role="tablist" aria-label="Account actions">
+          <button id="login-tab" class="tab active" type="button" role="tab" aria-selected="true">Sign in</button>
+          <button id="register-tab" class="tab" type="button" role="tab" aria-selected="false">Create account</button>
+        </div>
+
+        <form id="login-form" class="form">
+          <div class="form-heading">
+            <h2>Welcome back</h2>
+            <p>Enter your details to continue.</p>
+          </div>
+          <label>Email address
+            <input name="email" type="email" autocomplete="email" placeholder="you_name@example.com" required>
+          </label>
+          <label>Password
+            <input name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="button primary full" type="submit">Sign in <span aria-hidden="true">→</span></button>
+          <p id="login-error" class="inline-error" role="alert"></p>
+        </form>
+
+        <form id="register-form" class="form hidden">
+          <div class="form-heading">
+            <h2>Create your account</h2>
+            <p>We’ll send a one-time verification code.</p>
+          </div>
+          <label>Username
+            <input name="username" minlength="8" maxlength="50" autocomplete="username" placeholder="At least 8 characters" required>
+          </label>
+          <label>Email address
+            <input name="email" type="email" autocomplete="email" placeholder="you_name@example.com" required>
+          </label>
+          <label>Password
+            <input name="password" type="password" minlength="8" maxlength="12" autocomplete="new-password" required>
+            <span class="hint">8–12 characters, with uppercase, lowercase, number and symbol.</span>
+          </label>
+          <label>Account type
+            <select name="userType" required>
+              <option value="Standard User">Standard User</option>
+              <option value="Administrator">Administrator</option>
+            </select>
+          </label>
+          <button class="button primary full" type="submit">Create account <span aria-hidden="true">→</span></button>
+          <p id="register-error" class="inline-error" role="alert"></p>
+        </form>
+
+        <form id="otp-form" class="form hidden">
+          <div class="form-heading">
+            <span class="step-number">01 / VERIFY</span>
+            <h2>Check your inbox</h2>
+            <p>Enter the six-digit code sent to <strong id="otp-email"></strong>.</p>
+          </div>
+          <label>Verification code
+            <input name="otp" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" placeholder="000000" required>
+          </label>
+          <button class="button primary full" type="submit">Verify account <span aria-hidden="true">→</span></button>
+          <p id="otp-hint" class="hint"></p>
+          <p id="otp-error" class="inline-error" role="alert"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="app-view" class="app-view hidden">
+      <div class="welcome-row">
+        <div>
+          <p class="eyebrow">YOUR WORKSPACE</p>
+          <h1 id="welcome-message">Welcome</h1>
+          <p class="intro-copy">Manage your catalog and account access.</p>
+        </div>
+        <div class="account-actions">
+          <span id="role-badge" class="role-badge"></span>
+          <button id="logout-button" class="button secondary" type="button">Sign out</button>
+        </div>
+      </div>
+
+      <div id="notice" class="notice hidden" role="status"></div>
+      <section id="settings-panel" class="settings-panel hidden" aria-live="polite">
+        <div><p class="eyebrow">ADMINISTRATOR</p><h2>Workspace settings</h2></div>
+        <p id="settings-message">Loading settings…</p>
+      </section>
+
+      <section class="products-section">
+        <div class="section-heading">
+          <div><p class="eyebrow">CATALOG</p><h2>Products</h2></div>
+          <span id="product-count" class="muted"></span>
+        </div>
+        <div class="product-layout">
+          <form id="product-form" class="card form product-form">
+            <div class="form-heading">
+              <h3 id="product-form-title">Add a product</h3>
+              <p>Product changes are saved to the catalog.</p>
+            </div>
+            <label>Product name
+              <input name="name" maxlength="120" required>
+            </label>
+            <label>Description
+              <textarea name="description" rows="3" maxlength="1000"></textarea>
+            </label>
+            <div class="field-pair">
+              <label>Price
+                <input name="price" type="number" min="0.01" step="0.01" required>
+              </label>
+              <label>In stock
+                <input name="stock" type="number" min="0" step="1" value="0" required>
+              </label>
+            </div>
+            <button id="product-submit" class="button primary full" type="submit">Add product</button>
+            <button id="cancel-edit" class="button text-button hidden" type="button">Cancel edit</button>
+            <p id="product-error" class="inline-error" role="alert"></p>
+          </form>
+
+          <div class="card catalog-card">
+            <div id="product-list" class="product-list"></div>
+            <div id="empty-products" class="empty-state hidden">
+              <span class="empty-icon">◇</span>
+              <h3>Your catalog is ready</h3>
+              <p>Add your first product to see it here.</p>
+            </div>
+            <div class="pagination">
+              <button id="previous-page" class="button secondary small" type="button">← Previous</button>
+              <span id="page-label" class="muted"></span>
+              <button id="next-page" class="button secondary small" type="button">Next →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <footer><span>Northstar workspace</span><span>Secure by design <span class="footer-dot">●</span></span></footer>
+  </main>
+</body>
+</html>
